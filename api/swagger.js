@@ -7,7 +7,7 @@ const swaggerAPIDesc = swaggerJsDoc({
     swaggerDefinition: {
         openapi: '3.0.3',
         info: {
-            title: "Documentation for RestAPI",
+            title: "Documentation for tournament",
             description: "Example of swagger UI",
             termsOfService: "http://example.com/terms/",
             contact: {
@@ -31,51 +31,27 @@ const swaggerAPIDesc = swaggerJsDoc({
         tags: [
             {
                 name: "Home",
-                description: "All about home",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                description: "All about home"
             },
             {
-                name: "Admin",
-                description: "All about admin",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                name: "Application",
+                description: "All about application"
             },
             {
                 name: "User",
-                description: "All about user",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                description: "All about user"
             },
             {
                 name: "Post",
-                description: "All about post",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                description: "All about post"
             },
             {
                 name: "Category",
-                description: "All about category",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                description: "All about category"
             },
             {
                 name: "File",
-                description: "All about file",
-                externalDocs: {
-                    description: "Find out more",
-                    url: "http://swagger.io"
-                }
+                description: "All about file"
             },
             {
                 name: "Rating",
