@@ -1,66 +1,53 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import NProgress from "nprogress";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
+import NProgress from 'nprogress'
 
-const layout = (name: string) => () => import(`../layouts/${name}.vue`);
-const page = (name: string) => () => import(`../page/${name}.vue`);
+// Layouts
+import Default from '../layouts/Default.vue'
+import Application from '../layouts/Application.vue'
+import Auth from '../layouts/Auth.vue'
+import Error from '../layouts/Error.vue'
+
+
+// Pages
+import Home from '../page/Home.vue'
+import Dashboard from '../page/app/Dashboard.vue'
+import Login from '../page/auth/Login.vue'
+import Registration from '../page/auth/Registration.vue'
+
 
 const routes: RouteRecordRaw[] = [
     {
         path: '/',
-        component: layout('Default'),
+        component: Default,
         children: [
             {
                 path: '',
-                component: page('Home'),
+                component: Home,
             }
         ]
     },
     {
-        path: '/admin',
-        component: layout('Admin'),
+        path: '/app',
+        component: Application,
         children: [
             {
                 path: '',
-                component: page('admin/Dashboard'),
-            },
-            {
-                path: 'posts',
-                component: page('admin/Posts'),
-            },
-            {
-                path: 'categories',
-                component: page('admin/Categories'),
-            },
-            {
-                path: 'files',
-                component: page('admin/Files'),
-            },
-            {
-                path: 'teachers',
-                component: page('admin/TeacherPanel'),
-            },
-            {
-                path: 'students',
-                component: page('admin/StudentPanel'),
-            },
-            {
-                path: 'officers',
-                component: page('admin/OfficeStuff'),
-            },
+                component: Dashboard,
+            }
         ],
         meta: { requireAdmin: true },
     },
     {
         path: '/auth',
-        component: layout('Auth'),
+        component: Auth,
         children: [
             {
                 path: 'login',
-                component: page('auth/Login'),
+                component: Login
             },
             {
                 path: 'registration',
-                component: page('auth/Registration'),
+                component: Registration,
             },
         ]
     },
@@ -72,17 +59,6 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from) => {
-    if (!NProgress.isStarted()) {
-        NProgress.start();
-    }
-});
-
-router.afterEach((to, from) => {
-    NProgress.done();
-});
-
-
 router.beforeEach((to, from, next) => {
     let isAdmin = to.meta.requireAdmin;
     let adminToken = localStorage.adminToken;
@@ -91,6 +67,14 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
-})
+
+    if (!NProgress.isStarted()) {
+        NProgress.start();
+    }
+});
+
+router.afterEach((to, from) => {
+    NProgress.done();
+});
 
 export default router
