@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from "pinia";
+
+import 'nprogress/nprogress.css'
 import './assets/main.css'
 import './assets/custom.css'
 import App from './App.vue'

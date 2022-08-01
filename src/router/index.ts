@@ -3,71 +3,39 @@ import NProgress from 'nprogress'
 
 // Layouts
 import Default from '../layouts/Default.vue'
-import Application from '../layouts/Application.vue'
-import Auth from '../layouts/Auth.vue'
 import Error from '../layouts/Error.vue'
-
 
 // Pages
 import Home from '../page/Home.vue'
-import Dashboard from '../page/app/Dashboard.vue'
-import Login from '../page/auth/Login.vue'
-import Registration from '../page/auth/Registration.vue'
 
+// routes
+import accountRoute from "./account"
+import applicationRoute from "./application"
 
 const routes: RouteRecordRaw[] = [
-    {
-        path: '/',
-        component: Default,
-        children: [
-            {
-                path: '',
-                component: Home,
-            }
-        ]
-    },
-    {
-        path: '/app',
-        component: Application,
-        children: [
-            {
-                path: '',
-                component: Dashboard,
-            }
-        ],
-        meta: { requireAdmin: true },
-    },
-    {
-        path: '/auth',
-        component: Auth,
-        children: [
-            {
-                path: 'login',
-                component: Login
-            },
-            {
-                path: 'registration',
-                component: Registration,
-            },
-        ]
-    },
-
+    { path: '/', component: Default, children: [{ path: '', component: Home }] },
+    { ...applicationRoute },
+    { ...accountRoute },
+    { path: '/:pathMatch(.*)*', component: Error }
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
+    linkActiveClass: 'active',
+    linkExactActiveClass: 'active--exact',
     routes,
 });
 
 router.beforeEach((to, from, next) => {
-    let isAdmin = to.meta.requireAdmin;
-    let adminToken = localStorage.adminToken;
-    if (isAdmin && !adminToken) {
-        next({ path: '/auth/login' });
+    let authRequired = to.meta.authRequired;
+    let token = localStorage.token;
+    if (authRequired && !token) {
+        next({ path: '/account/login' });
     } else {
         next();
     }
 
+    next()
     if (!NProgress.isStarted()) {
         NProgress.start();
     }

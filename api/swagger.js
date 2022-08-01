@@ -34,8 +34,8 @@ const swaggerAPIDesc = swaggerJsDoc({
                 description: "All about home"
             },
             {
-                name: "Application",
-                description: "All about application"
+                name: "Admin",
+                description: "All about admin"
             },
             {
                 name: "User",
